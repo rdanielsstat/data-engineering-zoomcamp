@@ -1,1 +1,7 @@
 .DS_Store
+
+.venv
+
+# data
+01-containerization-iac/green_tripdata_2025-11.parquet
+01-containerization-iac/taxi_zone_lookup.csv
