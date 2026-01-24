@@ -34,6 +34,7 @@ Tools and technologies used throughout the course include:
 
 The repository is organized by modules and workshops:
 
+```text
 .
 ├── containerization
 ├── orchestration
@@ -43,6 +44,7 @@ The repository is organized by modules and workshops:
 ├── batch_processing
 ├── streaming
 └── final_project
+```
 
 Structure may evolve as the course progresses.
 
