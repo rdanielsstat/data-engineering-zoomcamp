@@ -69,3 +69,78 @@ volumes:
 ```
 
 For the above `docker-compose.yaml` file, the `hostname` and `port` that pgadmin should use to connect to the postgres database are `db:5432`.
+
+# SQL
+
+### For the trips in November 2025, how many trips had a trip_distance of less than or equal to 1 mile?
+
+```sql
+SELECT COUNT(*) AS short_trips
+  FROM green_tripdata
+ WHERE lpep_pickup_datetime >= '2025-11-01' AND 
+ 	   lpep_pickup_datetime < '2025-12-01' AND 
+	   trip_distance <= 1 ;
+```
+
+### Which was the pick up day with the longest trip distance considering only trips with trip_distance less than 100 miles?
+
+```sql
+SELECT DATE(lpep_pickup_datetime) AS pickup_day, MAX(trip_distance) AS max_distance
+  FROM green_tripdata
+ WHERE trip_distance < 100
+ GROUP BY DATE(lpep_pickup_datetime)
+ ORDER BY max_distance DESC
+ LIMIT 1 ;
+```
+
+### Which was the pickup zone with the largest total_amount (sum of all trips) on November 18th, 2025?
+
+```sql
+SELECT tz."Zone" AS pickup_zone,
+       SUM(gtd."total_amount") AS total_amount_sum
+  FROM green_tripdata AS gtd
+  JOIN taxi_zone_lookup AS tz
+       ON gtd."PULocationID" = tz."LocationID"
+ WHERE DATE(gtd.lpep_pickup_datetime) = '2025-11-18'
+ GROUP BY tz."Zone"
+ ORDER BY total_amount_sum DESC
+ LIMIT 1 ;
+ ```
+
+### For the passengers picked up in the zone named "East Harlem North" in November 2025, which was the drop off zone that had the largest tip?
+
+```sql
+SELECT tz_drop."Zone" AS dropoff_zone, gtd.tip_amount
+  FROM green_tripdata AS gtd
+  JOIN taxi_zone_lookup AS tz_pick
+       ON gtd."PULocationID" = tz_pick."LocationID"
+  JOIN taxi_zone_lookup AS tz_drop
+       ON gtd."DOLocationID" = tz_drop."LocationID"
+ WHERE tz_pick."Zone" = 'East Harlem North' AND 
+       gtd.lpep_pickup_datetime >= '2025-11-01' AND 
+	   gtd.lpep_pickup_datetime < '2025-12-01'
+ ORDER BY gtd.tip_amount DESC
+ LIMIT 1 ;
+```
+
+# Terraform workflow
+
+`terraform init`, `terraform apply -auto-approve`, `terraform destroy` describe:
+
+1. Downloading plugins and setting up backend, 
+2. Generating and executing changes, and 
+3. Removing all resources
+
+Why:
+
+1. `terraform init`
+   - Downloads providers/plugins
+   - Sets up backend
+   - First step in any Terraform workflow
+
+2. `terraform apply -auto-approve`
+   - Generates and executes changes
+   - `auto-approve` skips the interactive confirmation
+
+3. `terraform destroy`
+   - Removes all resources managed by Terraform
