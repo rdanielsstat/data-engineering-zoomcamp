@@ -1,2 +1,4 @@
 # python version: 3.12.12
-ipython==9.9.0
+ipykernel==7.1.0
+pathlib==1.0.1
+uv==0.9.26

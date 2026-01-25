@@ -2,6 +2,8 @@
 
 .venv
 
+.ipynb_checkpoints
+
 # data
-01-containerization-iac/green_tripdata_2025-11.parquet
-01-containerization-iac/taxi_zone_lookup.csv
+green_tripdata_2025-11.parquet
+taxi_zone_lookup.csv
