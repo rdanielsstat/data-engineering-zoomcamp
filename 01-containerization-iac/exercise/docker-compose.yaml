@@ -30,8 +30,6 @@ services:
     container_name: ingest
     depends_on:
       - pgdatabase
-    volumes:
-      - ./data:/data
     environment:
       PG_USER: root
       PG_PASS: root
