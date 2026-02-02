@@ -36,8 +36,8 @@ The repository is organized by modules and workshops:
 
 ```text
 .
-├── containerization
-├── orchestration
+├── 01-containerization-ica    # containerization + infrastructure as code
+├── 02-workflow-orchestration
 ├── ingestion
 ├── data_warehouse
 ├── analytics_engineering
