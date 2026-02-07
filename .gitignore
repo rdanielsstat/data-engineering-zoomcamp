@@ -7,3 +7,9 @@
 # data
 *.parquet
 *.csv
+
+.env
+*.env
+
+.env_encoded
+*.env_encoded
