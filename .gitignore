@@ -1,10 +1,12 @@
 .DS_Store
 
 .venv
+.venv311
 
 .ipynb_checkpoints
 
 # data
+data
 *.parquet
 *.csv
 
@@ -13,3 +15,11 @@
 
 .env_encoded
 *.env_encoded
+
+*.pdf
+
+gcs.json
+
+.dlt
+
+*.duckdb
