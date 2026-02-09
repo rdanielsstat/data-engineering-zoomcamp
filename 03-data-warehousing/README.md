@@ -1,10 +1,16 @@
-# Project Overview: Multi-Stage Data Ingestion and Warehousing
+# NYC Taxi Data Warehousing (BigQuery)
 
-This project focuses on the NYC Yellow Taxi data from the first half of 2024. I worked with six monthly files (January through June) and built a pipeline to move that data from raw files into a professional cloud setup, demonstrating both local prototyping and production-ready cloud ingestion.
+This project explores the process of moving raw public data into a cloud data warehouse and optimizing it for analytical queries using Google BigQuery.
 
-## Data Acquisition and Local Prototyping
+The dataset used is the **NYC Yellow Taxi trip data for Jan–Jun 2024**.
+The work focuses on ingestion, storage patterns, and query cost optimization.
 
-The ingestion began with programmatic retrieval of the following source files:
+## Dataset
+
+Source: NYC Taxi & Limousine Commission Trip Records
+https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+
+Files used:
 
 - `yellow_tripdata_2024-01.parquet`
 - `yellow_tripdata_2024-02.parquet`
@@ -13,37 +19,38 @@ The ingestion began with programmatic retrieval of the following source files:
 - `yellow_tripdata_2024-05.parquet`
 - `yellow_tripdata_2024-06.parquet`
 
-The data can be downloaded manually from [NYC Taxi & Limousine Commission Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).  
+## Local Prototyping with DuckDB
 
-For initial development and local testing, the data was ingested into a **DuckDB** instance. This provided:
+Before loading data into the cloud, the dataset was explored locally using DuckDB.
 
-- High-performance analytical queries
-- Schema validation
-- Low-cost experimentation before moving to the cloud
+This allowed:
+- Quick validation of schema and queries
+- Fast experimentation without cloud costs
+- A simple development workflow before deploying to GCP
 
-## Cloud Orchestration and Ingestion Patterns
-The transition to **Google Cloud Platform (GCP)** involved two primary ingestion methodologies:
+## Uploading Data to Google Cloud Storage
 
-### 1. Automated Data Loading (DLT)
-- Implemented using the **DLT (Data Load Tool)** library.
-- Streamlines migration of data into GCP.
-- Secured via **service account key authentication**, ensuring a reproducible pipeline.
+Data was uploaded to GCS using two different approaches.
 
-### 2. Custom API Integration
-- Secondary ingestion script leveraging `urllib` for data retrieval and the **Google Cloud Python SDK** for bucket management.
-- Authentication handled via **Google Cloud CLI/SDK**, using managed identity credentials.
+### DLT pipeline
 
-By using both DLT and native Google Cloud APIs, the project demonstrates proficiency in **high-level orchestration tools** and **direct cloud service integration**.
+A pipeline built with the DLT library handled ingestion using a service account for authentication.
 
-# 2024 Yellow NYC Taxi Data: BigQuery Optimization and Workflow
+### Python upload script
 
-This section outlines the process for ingesting, optimizing, and analyzing the 2024 NYC Yellow Taxi dataset within GCP, comparing external and native tables, and demonstrating performance improvements.
+A custom script was also created using the Google Cloud Python SDK.
+This script downloads the files, creates the bucket if needed, and uploads the data in parallel with retry logic.
 
-## Data ingestion: external vs. native tables
-The project began by establishing two distinct table types to compare performance and storage behaviors.
+Using both approaches helped demonstrate different ways of working with GCP services.
+
+## BigQuery Tables
+
+Two table types were created in BigQuery to compare behavior and performance.
 
 ### External table
-The data remains in Google Cloud Storage (GCS). This creates a "link" without moving the physical data.
+
+The external table queries the Parquet files directly from GCS.
+
 ```sql
 CREATE OR REPLACE EXTERNAL TABLE `sandbox-486719.rides_dataset.yellow_taxi_2024_external`
 OPTIONS (
@@ -51,8 +58,12 @@ OPTIONS (
   uris = ['gs://sandbox-486719-nyc-taxi-raw/yellow_tripdata_2024-*.parquet']
 ) ;
 ```
-### Native (materialized) table
-Data is ingested into BigQuery’s managed storage for better performance.
+
+This keeps storage in GCS and avoids data duplication.
+
+### Native table
+
+The data was then loaded into BigQuery managed storage.
 
 ```sql
 CREATE OR REPLACE TABLE `sandbox-486719.rides_dataset.yellow_taxi_2024_native` AS
@@ -60,9 +71,11 @@ SELECT *
   FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_external` ;
 ```
 
-## Row count verification
+This improves query performance and enables warehouse optimizations.
 
-A baseline check to ensure both table structures reflect the same total volume of records.
+## Row Count Verification
+
+After creating the external and native tables, a row count check was performed to confirm that the load into BigQuery completed correctly and that both tables contain the same number of records.
 
 ```sql
 SELECT COUNT(*) AS total_records 
@@ -72,7 +85,8 @@ SELECT COUNT(*) AS total_records
   FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 ```
 
-## Storage efficiency and data read estimation
+## Storage Efficiency and Data Read Estimation
+
 External tables show 0 MB estimates because metadata is not managed by BigQuery. Native tables provide accurate estimates because they use managed columnar storage.
 
 ```sql
@@ -85,7 +99,10 @@ SELECT COUNT(DISTINCT PULocationID)
   FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 ```
 
-## Columnar storage analysis
+This difference highlights how BigQuery can better optimize and predict query cost when data is stored natively.
+
+## Columnar Storage and Bytes Scanned
+
 BigQuery’s cost is determined by the number of columns scanned. Adding more columns to a query increases the bytes processed linearly.
 
 ```sql
@@ -98,7 +115,10 @@ SELECT PULocationID, DOLocationID
   FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 ```
 
-## Data quality and filtering
+This demonstrates how limiting selected columns can significantly reduce query cost.
+
+## Data Quality and Filtering
+
 Identifying records with a fare_amount of 0 to detect potential data anomalies.
 
 ```sql
@@ -107,7 +127,8 @@ SELECT COUNT(*) AS zero_fare_count
  WHERE fare_amount = 0 ;
 ```
 
-## Table optimization: partitioning and clustering
+## Table Optimization: Partitioning and Clustering
+
 To optimize for date-based filtering and vendor-based ordering, implement partitioning and clustering.
 
 ```sql
@@ -118,7 +139,8 @@ PARTITION BY DATE(tpep_dropoff_datetime)
      FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 ```
 
-## Performance benchmarking
+## Query Performance Comparison
+
 Comparing the optimized table against the non-partitioned table for a March 1–15 date range scan.
 
 * Non-partitioned Scan: 310.24 MB
@@ -136,12 +158,16 @@ SELECT DISTINCT(VendorID)
  WHERE tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15' ;
 ```
 
-## Metadata caching mechanisms
-For native tables, count(*) estimates 0 bytes because it retrieves the answer from pre-calculated metadata.
+Partitioning significantly reduces the amount of data scanned.
+
+## BigQuery Metadata Optimization
+
+BigQuery stores table statistics that allow some queries to run without scanning data.
 
 ```sql
-SELECT count(*) FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
+SELECT COUNT(*) FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 ```
 
-**Observation:** 0 bytes processed.
-**Technical Detail:** BigQuery’s metadata layer stores statistics like total row count, making this operation instantaneous and free.
+Estimated bytes processed: 0 bytes
+
+The result comes from metadata rather than a full table scan.
