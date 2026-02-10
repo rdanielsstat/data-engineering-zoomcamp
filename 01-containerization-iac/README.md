@@ -1,28 +1,22 @@
-# Understanding Docker images
+# Containerization and Infrastructure Foundations for Data Engineering
 
-The following starts an interactive container with a bash prompt.
+This project walks through the foundational tooling used in modern data engineering workflows. The goal is to build a reproducible local environment, explore container networking, analyze real taxi trip data with SQL, and automate cloud infrastructure provisioning using Terraform.
+
+The workflow mirrors how real data platforms are developed: start with isolated environments, move into orchestrated services, analyze data, then provision scalable infrastructure.
+
+## Running Python in a Container
+
+A core principle of data engineering is reproducibility. Containers allow us to package an environment so it behaves the same across machines.
+
+To explore a minimal Python runtime, an interactive container was started from the official Python image:
 
 ```bash
 docker run -it --entrypoint bash python:3.13
 ```
 
-Output:
-```text
-Unable to find image 'python:3.13' locally
-3.13: Pulling from library/python
-4a1c41792403: Pull complete 
-c9b629762372: Pull complete 
-3fffeb567ed4: Pull complete 
-5582010cab7f: Pull complete 
-2470fab23101: Pull complete 
-599d5b6b6766: Pull complete 
-6a2920e3d16b: Pull complete 
-Digest: sha256:c8b03b4e98b39cfb180a5ea13ae5ee39039a8f75ccf52fe6d5c216eed6e1be1d
-Status: Downloaded newer image for python:3.13
-root@e2192db6d18d:/#
-```
+Docker pulled the image and launched an interactive shell inside the container.
 
-Once inside the container, the following is run to get the version of pip.
+Once inside, the installed package manager version was inspected:
 
 ```bash
 pip --version
@@ -34,7 +28,15 @@ Output:
 pip 25.3 from /usr/local/lib/python3.13/site-packages/pip (python 3.13)
 ```
 
-# Understanding Docker networking and docker-compose
+This confirms the Python 3.13 image ships with pip 25.3.
+
+This step demonstrates how containers provide fully packaged runtimes, eliminating dependency drift between environments.
+
+## Container Networking with Docker Compose
+
+Real data systems rarely run as a single service. Databases, orchestration tools, and UIs must communicate across containers. Docker Compose provides a simple way to define multi-service environments.
+
+The following stack launches PostgreSQL and pgAdmin together:
 
 ```yaml
 services:
@@ -68,11 +70,35 @@ volumes:
     name: vol-pgadmin_data
 ```
 
-For the above `docker-compose.yaml` file, the `hostname` and `port` that pgadmin should use to connect to the postgres database are `db:5432`.
+Docker Compose automatically creates a shared internal network where services can reach each other using **service names as hostnames**.
 
-# SQL
+Because PostgreSQL exposes port `5432` inside the container and the service name is `db`, pgAdmin connects using:
 
-### For the trips in November 2025, how many trips had a trip_distance of less than or equal to 1 mile?
+```makefile
+db:5432
+```
+
+This highlights an important concept:
+Host machine ports and container network ports are different concerns. Containers communicate over the internal Docker network, not the host-mapped ports.
+
+## Preparing the Dataset
+
+To simulate a realistic analytics workflow, NYC Green Taxi data was downloaded:
+
+```bash
+wget https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-11.parquet
+wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv
+```
+
+The dataset was loaded into PostgreSQL for analysis.
+
+## SQL Analysis of Taxi Trips
+
+Working with SQL is central to analytics engineering and warehousing. The following queries explore trip behavior in November 2025.
+
+### Short Distance Trips
+
+Understanding trip length distribution is a common exploratory task.
 
 ```sql
 SELECT COUNT(*) AS short_trips
@@ -82,7 +108,13 @@ SELECT COUNT(*) AS short_trips
 	   trip_distance <= 1 ;
 ```
 
-### Which was the pick up day with the longest trip distance considering only trips with trip_distance less than 100 miles?
+Result: **8,007 trips**
+
+This query demonstrates filtering by time ranges and applying distance-based constraints.
+
+### Longest trip by pickup day
+
+To identify outliers while avoiding data errors, trips longer than 100 miles were excluded.
 
 ```sql
 SELECT DATE(lpep_pickup_datetime) AS pickup_day, MAX(trip_distance) AS max_distance
@@ -93,7 +125,13 @@ SELECT DATE(lpep_pickup_datetime) AS pickup_day, MAX(trip_distance) AS max_dista
  LIMIT 1 ;
 ```
 
-### Which was the pickup zone with the largest total_amount (sum of all trips) on November 18th, 2025?
+Result: **2025-11-14**
+
+This illustrates grouping, aggregation, and sorting to surface extreme values.
+
+### Highest revenue pickup zone (single day)
+
+Joining fact tables with dimension tables is a core data warehousing pattern.
 
 ```sql
 SELECT tz."Zone" AS pickup_zone,
@@ -107,7 +145,13 @@ SELECT tz."Zone" AS pickup_zone,
  LIMIT 1 ;
  ```
 
-### For the passengers picked up in the zone named "East Harlem North" in November 2025, which was the drop off zone that had the largest tip?
+Result: **East Harlem North**
+
+This demonstrates star-schema style joins and revenue aggregation.
+
+### Largest tip destination from East Harlem North
+
+This query analyzes tipping behavior by combining pickup filtering, time filtering, and zone joins.
 
 ```sql
 SELECT tz_drop."Zone" AS dropoff_zone, gtd.tip_amount
@@ -123,24 +167,35 @@ SELECT tz_drop."Zone" AS dropoff_zone, gtd.tip_amount
  LIMIT 1 ;
 ```
 
-# Terraform workflow
+Result: **JFK Airport**
 
-`terraform init`, `terraform apply -auto-approve`, `terraform destroy` describe:
+This showcases multi-join analytics queries and ranking results.
 
-1. Downloading plugins and setting up backend, 
-2. Generating and executing changes, and 
-3. Removing all resources
+## Provisioning Cloud Infrastructure with Terraform
 
-Why:
+Data platforms must be reproducible in the cloud. Infrastructure as Code enables version-controlled environments.
 
-1. `terraform init`
-   - Downloads providers/plugins
-   - Sets up backend
-   - First step in any Terraform workflow
+The Terraform workflow used in this project follows the standard lifecycle:
 
-2. `terraform apply -auto-approve`
-   - Generates and executes changes
-   - `auto-approve` skips the interactive confirmation
+```cpp
+terraform init
+terraform apply -auto-approve
+terraform destroy
+```
 
-3. `terraform destroy`
-   - Removes all resources managed by Terraform
+### What each step represents
+
+**terraform init**
+- Downloads provider plugins
+- Configures backend state
+- Prepares the working directory
+
+**terraform apply -auto-approve**
+- Generates the execution plan
+- Applies the changes automatically
+- Creates cloud resources such as storage buckets and datasets
+
+**terraform destroy**
+- Removes all resources managed by Terraform
+
+This workflow ensures infrastructure can be created and removed reliably, enabling repeatable environments for data projects.
