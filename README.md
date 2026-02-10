@@ -40,9 +40,9 @@ The repository is organized by modules and workshops:
 ├── 02-workflow-orchestration
 ├── 03-data-warehousing
 ├── 04-analytics-engineering
-├── analytics_engineering
-├── batch_processing
-├── streaming
+├── 05-data-platforms
+├── 06-batch_processing
+├── 07-streaming
 └── final_project
 ```
 
