@@ -1,3 +1,10 @@
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=googlecloud&logoColor=white)
+![Kestra](https://img.shields.io/badge/Kestra-Orchestration-7A5AF8)
+![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
+
 # Data Engineering Zoomcamp
 
 Hands-on projects and notes from the Data Engineering Zoomcamp by [Alexey Grigorev](https://github.com/alexeygrigorev) and the [DataTalks.Club](https://github.com/DataTalksClub) team.

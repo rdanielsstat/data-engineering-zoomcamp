@@ -1,3 +1,10 @@
+![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
+![Google Cloud Storage](https://img.shields.io/badge/Google%20Cloud%20Storage-4285F4?logo=googlecloud&logoColor=white)
+![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![DLT](https://img.shields.io/badge/DLT-Data%20Loading-8A2BE2)
+![Data Warehouse](https://img.shields.io/badge/Data%20Warehouse-Analytics-orange)
+
 # NYC Taxi Data Warehousing (BigQuery)
 
 This project explores the process of moving raw public data into a cloud data warehouse and optimizing it for analytical queries using Google BigQuery.

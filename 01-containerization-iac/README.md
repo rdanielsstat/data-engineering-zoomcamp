@@ -1,3 +1,10 @@
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2496ED?logo=docker&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=googlecloud&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-CC2927?logo=postgresql&logoColor=white)
+
 # Containerization and Infrastructure Foundations for Data Engineering
 
 This project walks through the foundational tooling used in modern data engineering workflows. The goal is to build a reproducible local environment, explore container networking, analyze real taxi trip data with SQL, and automate cloud infrastructure provisioning using Terraform.
