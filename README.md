@@ -44,7 +44,7 @@ The repository is organized by modules and workshops:
 
 ```text
 .
-├── 01-containerization-ica    # IAC = infrastructure as code
+├── 01-containerization-iac    # IAC = infrastructure as code
 ├── 02-workflow-orchestration
 ├── 03-data-warehousing
 ├── 04-analytics-engineering
