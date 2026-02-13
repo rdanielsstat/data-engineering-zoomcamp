@@ -1,10 +1,12 @@
 # python version: 3.12.12
-dlt==1.21.0
+dlt[bigquery]==1.21.0
 duckdb==1.4.4
 google==3.0.0
+google-cloud-bigquery-storage==2.36.1
 google-cloud-storage==3.9.0
 ipykernel==7.1.0
 pandas==3.0.0
 pathlib==1.0.1
+pipdeptree==2.30.0
 pyarrow==23.0.0
 uv==0.9.26
