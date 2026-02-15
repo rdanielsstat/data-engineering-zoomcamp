@@ -15,6 +15,7 @@ data
 
 .env_encoded
 *.env_encoded
+.recovery_code
 
 *.pdf
 
