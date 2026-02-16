@@ -2,6 +2,7 @@
 
 .venv
 .venv311
+.venv-dbt
 
 .ipynb_checkpoints
 
@@ -24,3 +25,7 @@ gcs.json
 .dlt
 
 *.duckdb
+
+logs
+
+archive

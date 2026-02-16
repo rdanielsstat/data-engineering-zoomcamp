@@ -1,0 +1,2 @@
+# python version: 3.11.14
+dbt-bigquery==1.11.0
