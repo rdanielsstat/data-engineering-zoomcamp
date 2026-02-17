@@ -129,11 +129,9 @@ SELECT COUNT(*) AS record_count
 
 Result:
 
-```diff
-record_count
--------------
-12,184
-```
+| record_count |
+|--------------|
+|       12,184 |
 
 This simple count serves as a sanity check to confirm that the fact model loaded the expected number of records.
 
@@ -169,11 +167,9 @@ SELECT pickup_zone,
 
 Result:
 
-```diff
-pickup_zone
--------------
-`East Harlem North`
-```
+| pickup_zone       |
+|-------------------|
+| East Harlem North |
 
 This query highlights the highest-grossing area for Green taxi trips, providing insights into where revenue was concentrated during 2020.
 
@@ -205,11 +201,9 @@ SELECT SUM(total_monthly_trips) AS october_2019_trips
 
 Result:
 
-```diff
-october_2019_trips
-------------------
-384,624
-```
+| october_2019_trips |
+|--------------------|
+|            384,624 |
 
 This monthly aggregation helps quantify trip volumes and observe trends over time.
 
@@ -256,11 +250,9 @@ SELECT COUNT(*) AS fhv_2019_records
 
 Result:
 
-```diff
-fhv_2019_records
-----------------
-43,244,693
-```
+| fhv_2019_records |
+|------------------|
+|       43,244,693 |
 
 This confirms that the staged FHV dataset is complete and ready for further transformations.
 
