@@ -65,7 +65,7 @@ def download_file(file_name):
 
 def transform_to_parquet(file_path):
     print(f"Processing {os.path.basename(file_path)}...")
-    df = pd.read_csv(file_path, compression="gzip", low_memory = False)
+    df = pd.read_csv(file_path, compression = "gzip", low_memory = False)
 
     # Rename columns
     df = df.rename(columns=FHV_RENAME)
@@ -86,15 +86,34 @@ def transform_to_parquet(file_path):
     # Keep only desired columns in order
     df = df[FHV_COLUMNS]
 
+    # Force string types before writing parquet
+    df["dispatching_base_num"] = df["dispatching_base_num"].astype("string")
+    df["pickup_location_id"] = df["pickup_location_id"].astype("string")
+    df["dropoff_location_id"] = df["dropoff_location_id"].astype("string")
+    df["sr_flag"] = df["sr_flag"].astype("string")
+    df["affiliated_base_number"] = df["affiliated_base_number"].astype("string")
+
     # Save as Parquet
     parquet_name = os.path.basename(file_path).replace(".csv.gz", ".parquet")
     parquet_path = os.path.join(PARQUET_DIR, parquet_name)
-    df.to_parquet(parquet_path, engine="pyarrow", index=False)
+    df.to_parquet(
+        parquet_path,
+        engine = "pyarrow",
+        index = False,
+        coerce_timestamps = "us",
+        allow_truncated_timestamps = True
+    )
     return parquet_path
 
 def upload_to_gcs(parquet_path):
     blob_name = f"parquet/{os.path.basename(parquet_path)}"
     blob = bucket.blob(blob_name)
+
+    # Delete existing parquet so upload overwrites
+    if blob.exists():
+        print(f"Deleting existing file: {blob_name}")
+        blob.delete()
+
     print(f"Uploading {blob_name}...")
     blob.upload_from_filename(parquet_path)
     print(f"Uploaded gs://{BUCKET_NAME}/{blob_name}")

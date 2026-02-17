@@ -92,3 +92,20 @@ models:
         description: Total amount charged to passengers (does not include cash tips)
       - name: payment_type
         description: Payment method code (1=Credit card, 2=Cash, 3=No charge, 4=Dispute, 5=Unknown, 6=Voided)
+  - name: stg_fhv_tripdata
+    description: "Staging table for FHV trip data, with renamed columns and null dispatching_base_num filtered out."
+    columns:
+      - name: dispatching_base_num
+        description: "FHV dispatching base number, primary identifier for driver affiliation"
+      - name: pickup_datetime
+        description: "Pickup timestamp"
+      - name: dropoff_datetime
+        description: "Dropoff timestamp"
+      - name: pickup_location_id
+        description: "Pickup TLC zone ID"
+      - name: dropoff_location_id
+        description: "Dropoff TLC zone ID"
+      - name: sr_flag
+        description: "SR flag"
+      - name: affiliated_base_number
+        description: "Affiliated base number"

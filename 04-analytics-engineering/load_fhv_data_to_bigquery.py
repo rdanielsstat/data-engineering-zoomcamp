@@ -20,7 +20,7 @@ fhv_schema = [
     bigquery.SchemaField("dropoff_datetime", "TIMESTAMP"),
     bigquery.SchemaField("pickup_location_id", "STRING"),
     bigquery.SchemaField("dropoff_location_id", "STRING"),
-    bigquery.SchemaField("sr_flag", "NUMERIC"),  # <--- change to NUMERIC
+    bigquery.SchemaField("sr_flag", "STRING"),
     bigquery.SchemaField("affiliated_base_number", "STRING"),
 ]
 
@@ -48,7 +48,7 @@ def load_table(table_name, gcs_uri, schema):
         schema = schema,
         autodetect = False,
     )
-    load_job = client.load_table_from_uri(gcs_uri, table_id, job_config=job_config)
+    load_job = client.load_table_from_uri(gcs_uri, table_id, job_config = job_config)
     print(f"Starting load job for {table_name}...")
     load_job.result()
     table = client.get_table(table_id)
@@ -61,6 +61,6 @@ if __name__ == "__main__":
     create_dataset()
 
     fhv_uri = f"gs://{BUCKET_NAME}/parquet/fhv_tripdata_2019-*.parquet"
-    load_table("stg_fhv_tripdata", fhv_uri, fhv_schema)
+    load_table("fhv_tripdata", fhv_uri, fhv_schema)
 
     print("FHV 2019 BigQuery load complete!")
