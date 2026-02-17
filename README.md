@@ -1,3 +1,4 @@
+![Data Engineering](https://img.shields.io/badge/Data%20Engineering-00BFFF)
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-CC2927?logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
@@ -6,7 +7,6 @@
 ![Kestra](https://img.shields.io/badge/Kestra-Orchestration-7A5AF8)
 ![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
 ![dbt](https://img.shields.io/badge/dbt-FF0000?logo=dbt-labs&logoColor=white)
-![Data Engineering](https://img.shields.io/badge/Data%20Engineering-00BFFF)
 ![Analytics Engineering](https://img.shields.io/badge/Analytics%20Engineering-FFA500)
 
 # Data Engineering Zoomcamp
