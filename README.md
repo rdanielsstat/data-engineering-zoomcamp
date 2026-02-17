@@ -5,6 +5,9 @@
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=googlecloud&logoColor=white)
 ![Kestra](https://img.shields.io/badge/Kestra-Orchestration-7A5AF8)
 ![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
+![dbt](https://img.shields.io/badge/dbt-FF0000?logo=dbt-labs&logoColor=white)
+![Data Engineering](https://img.shields.io/badge/Data%20Engineering-00BFFF)
+![Analytics Engineering](https://img.shields.io/badge/Analytics%20Engineering-FFA500)
 
 # Data Engineering Zoomcamp
 
