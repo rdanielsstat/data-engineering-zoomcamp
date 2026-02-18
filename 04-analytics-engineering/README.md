@@ -141,15 +141,14 @@ The `fct_monthly_zone_revenue` model can also be used to analyze revenue perform
 
 ```sql
 -- in BigQuery
-SELECT
-    pickup_zone,
-    SUM(revenue_monthly_total_amount) AS total_revenue
-FROM `sandbox-486719.dbt_prod.fct_monthly_zone_revenue`
-WHERE service_type = 'Green'
-  AND EXTRACT(YEAR FROM revenue_month) = 2020
-GROUP BY pickup_zone
-ORDER BY total_revenue DESC
-LIMIT 1 ;
+SELECT pickup_zone,
+       SUM(revenue_monthly_total_amount) AS total_revenue
+  FROM `sandbox-486719.dbt_prod.fct_monthly_zone_revenue`
+ WHERE service_type = 'Green'
+   AND EXTRACT(YEAR FROM revenue_month) = 2020
+ GROUP BY pickup_zone
+ ORDER BY total_revenue DESC
+ LIMIT 1 ;
 ```
 
 Or using dbt’s `ref` syntax:
@@ -179,13 +178,11 @@ Aggregating trips by month allows us to track operational metrics and seasonal p
 
 ```sql
 -- in BigQuery
--- in BigQuery
-SELECT
-    SUM(total_monthly_trips) AS october_2019_trips
-FROM `sandbox-486719.dbt_prod.fct_monthly_zone_revenue`
-WHERE service_type = 'Green'
-  AND EXTRACT(YEAR FROM revenue_month) = 2019
-  AND EXTRACT(MONTH FROM revenue_month) = 10 ;
+SELECT SUM(total_monthly_trips) AS october_2019_trips
+  FROM `sandbox-486719.dbt_prod.fct_monthly_zone_revenue`
+ WHERE service_type = 'Green'
+   AND EXTRACT(YEAR FROM revenue_month) = 2019
+   AND EXTRACT(MONTH FROM revenue_month) = 10 ;
 ```
 
 Or using dbt’s `ref` function:
@@ -222,14 +219,13 @@ SELECT *
   FROM {{ source('raw', 'fhv_tripdata') }}
 ),
 
-SELECT
-    dispatching_base_num,
-    pickup_datetime,
-    dropoff_datetime,
-    pickup_location_id,
-    dropoff_location_id,
-    sr_flag,
-    affiliated_base_number
+SELECT dispatching_base_num,
+       pickup_datetime,
+       dropoff_datetime,
+       pickup_location_id,
+       dropoff_location_id,
+       sr_flag,
+       affiliated_base_number
   FROM source
  WHERE dispatching_base_num IS NOT NULL ;
 ```
