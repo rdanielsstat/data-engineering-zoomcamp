@@ -149,27 +149,27 @@ columns:
 
 -- Normalize pickup/dropoff (yellow=tpep_*, green=lpep_* when present) and location (pulocationid or pu_location_id).
 -- Join with payment lookup; deduplicate by composite key; filter invalid rows.
--- Uses only tpep_* and pu_location_id/do_location_id so staging works when only yellow taxi is ingested (no lpep_* columns).
+-- Uses only tpep_* and pulocationid/dolocationid so staging works when only yellow taxi is ingested (no lpep_* columns).
 WITH normalized AS (
   SELECT
     tpep_pickup_datetime AS pickup_datetime,
     tpep_dropoff_datetime AS dropoff_datetime,
-    pu_location_id AS pulocationid,
-    do_location_id AS dolocationid,
+    pulocationid,
+    dolocationid,
     taxi_type,
     extracted_at,
     passenger_count,
     trip_distance,
     store_and_fwd_flag,
     payment_type,
-    COALESCE(fare_amount, 0) AS fare_amount,
-    COALESCE(tip_amount, 0) AS tip_amount,
-    COALESCE(total_amount, 0) AS total_amount
+    GREATEST(COALESCE(fare_amount, 0), 0) AS fare_amount,
+    GREATEST(COALESCE(tip_amount, 0), 0) AS tip_amount,
+    GREATEST(COALESCE(total_amount, 0), 0) AS total_amount
   FROM ingestion.trips
   WHERE tpep_pickup_datetime >= '{{ start_datetime }}'
     AND tpep_pickup_datetime < '{{ end_datetime }}'
-    AND pu_location_id IS NOT NULL
-    AND do_location_id IS NOT NULL
+    AND pulocationid IS NOT NULL
+    AND dolocationid IS NOT NULL
     AND taxi_type IS NOT NULL
     AND extracted_at IS NOT NULL
     AND passenger_count IS NOT NULL
