@@ -25,7 +25,20 @@ gcs.json
 .dlt
 
 *.duckdb
+*.db
 
 logs
 
 archive
+
+.bruin.yml
+
+logs/runs
+
+logs/*.log
+
+__pycache__/
+
+*.py[cod]
+
+logs/queries
