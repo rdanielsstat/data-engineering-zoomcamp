@@ -8,6 +8,10 @@
 ![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
 ![dbt](https://img.shields.io/badge/dbt-FF0000?logo=dbt-labs&logoColor=white)
 ![Analytics Engineering](https://img.shields.io/badge/Analytics%20Engineering-FFA500)
+![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?logo=visual-studio-code&logoColor=white)
+![Bruin CLI](https://img.shields.io/badge/Bruin-CLI-orange)
+![Cursor IDE](https://img.shields.io/badge/Cursor-IDE-lightblue)
+![MCP](https://img.shields.io/badge/MCP-enabled-brightgreen)
 
 # Data Engineering Zoomcamp
 

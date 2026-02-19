@@ -192,4 +192,3 @@ def materialize():
   combined_df = pd.concat(all_dataframes, ignore_index=True)
   print(f"Total rows combined: {len(combined_df)}")
   return combined_df
-

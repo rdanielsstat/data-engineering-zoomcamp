@@ -44,7 +44,6 @@ columns:
 
 @bruin */
 
-
   SELECT
     LocationID    AS location_id,
     Borough       AS borough,
