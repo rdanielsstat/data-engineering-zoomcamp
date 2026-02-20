@@ -1,5 +1,6 @@
 # python version: 3.12.12
 dlt[bigquery]==1.21.0
+dlt[workspace]==1.21.0
 duckdb==1.4.4
 google==3.0.0
 google-cloud-bigquery-storage==2.36.1
