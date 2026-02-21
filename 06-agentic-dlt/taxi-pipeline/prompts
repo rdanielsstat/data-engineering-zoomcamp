@@ -1,0 +1,12 @@
+Build a REST API source for NYC taxi data.
+
+API details:
+- Base URL: https://us-central1-dlthub-analytics.cloudfunctions.net/data_engineering_zoomcamp_api
+- Data format: Paginated JSON (1,000 records per page)
+- Pagination: Stop when an empty page is returned
+
+Place the code in taxi_pipeline.py and name the pipeline taxi_pipeline.
+Use @dlt rest api as a tutorial.
+
+
+I have working pipeline code now for the taxi_pipeline. review it and use the database it created for context and tell me, What is the start date and end date of the dataset?

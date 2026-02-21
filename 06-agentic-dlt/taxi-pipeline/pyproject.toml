@@ -1,0 +1,11 @@
+[project]
+name = "taxi-pipeline"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12.12"
+dependencies = [
+    "dlt[sources,workspace]>=1.22.0",
+    "duckdb>=1.4.4",
+    "numpy>=2.4.2",
+]
