@@ -1,3 +1,12 @@
+![dlt](https://img.shields.io/badge/dlt-modern%20data%20ingestion-4B32C3)
+![Agentic AI](https://img.shields.io/badge/Agentic%20AI-supported-blue)
+![MCP](https://img.shields.io/badge/MCP-enabled-brightgreen)
+![Data Engineering](https://img.shields.io/badge/Data%20Engineering-pipeline-blueviolet)
+![ELT](https://img.shields.io/badge/ELT-workflow-orange)
+![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
+![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?logo=visual-studio-code&logoColor=white)
+![Cursor](https://img.shields.io/badge/Cursor-IDE-lightblue)
+
 # From API to Warehouse
 
 #### AI-Assisted Data Ingestion with dlt, MCP, and Agentic IDEs
