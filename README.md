@@ -6,12 +6,15 @@
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=googlecloud&logoColor=white)
 ![Kestra](https://img.shields.io/badge/Kestra-Orchestration-7A5AF8)
 ![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
+![ELT](https://img.shields.io/badge/ELT-workflow-orange)
 ![dbt](https://img.shields.io/badge/dbt-FF0000?logo=dbt-labs&logoColor=white)
+![dlt](https://img.shields.io/badge/dlt-modern%20data%20ingestion-4B32C3)
 ![Analytics Engineering](https://img.shields.io/badge/Analytics%20Engineering-FFA500)
 ![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?logo=visual-studio-code&logoColor=white)
 ![Bruin CLI](https://img.shields.io/badge/Bruin-CLI-orange)
 ![Cursor IDE](https://img.shields.io/badge/Cursor-IDE-lightblue)
 ![MCP](https://img.shields.io/badge/MCP-enabled-brightgreen)
+![Agentic AI](https://img.shields.io/badge/Agentic%20AI-supported-blue)
 
 # Data Engineering Zoomcamp
 
