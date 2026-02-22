@@ -59,9 +59,10 @@ The repository is organized by modules and workshops:
 ├── 03-data-warehousing
 ├── 04-analytics-engineering
 ├── 05-data-platforms
-├── 06-batch_processing
-├── 07-streaming
-└── final_project
+├── 06-agentic-dlt
+├── 07-batch-processing
+├── 08-streaming
+└── final-project
 ```
 
 Structure may evolve as the course progresses.
