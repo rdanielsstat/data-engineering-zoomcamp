@@ -11,6 +11,8 @@ data
 *.parquet
 *.csv
 
+tmp
+
 .env
 *.env
 
