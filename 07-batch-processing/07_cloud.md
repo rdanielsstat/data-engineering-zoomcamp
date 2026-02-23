@@ -16,12 +16,41 @@ Download the jar for connecting to GCS to any location (e.g. the `lib` folder):
 gsutil cp gs://hadoop-lib/gcs/gcs-connector-hadoop3-2.2.5.jar ./lib/
 ```
 
+Or, download directly from here: https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop3-latest.jar.
+
 See the notebook with configuration in [09_spark_gcs.ipynb](09_spark_gcs.ipynb)
 
 (Thanks Alvin Do for the instructions!)
 
 
 ### Local Cluster and Spark-Submit
+
+Install Apache Spark using Homebrew on macOS:
+
+```bash
+homebrew install apache-spark
+```
+
+Add the following to `~/.bash_profile`:
+
+```shell
+export SPARK_HOME="/opt/homebrew/opt/apache-spark/libexec"
+export PATH="$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH"
+```
+
+Then reload the shell script:
+
+```bash
+source ~/.bash_profile
+```
+
+Then start a stand-alone cluster:
+
+```bash
+$SPARK_HOME/sbin/start-master.sh
+```
+
+Also, see these instructions:
 
 Creating a stand-alone cluster ([docs](https://spark.apache.org/docs/latest/spark-standalone.html)):
 
@@ -30,6 +59,13 @@ Creating a stand-alone cluster ([docs](https://spark.apache.org/docs/latest/spar
 ```
 
 Creating a worker:
+
+Update. Start this using the URL from the master:
+
+```bash
+$SPARK_HOME/sbin/start-worker.sh spark://Robs-MacBook-Air.local:7077
+```
+
 
 ```bash
 URL="spark://de-zoomcamp.europe-west1-b.c.de-zoomcamp-nytaxi.internal:7077"
