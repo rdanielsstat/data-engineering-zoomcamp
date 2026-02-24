@@ -84,7 +84,7 @@ The dashboard provided:
 - Table-level metadata
 - Direct query interface
 
-This incredibly powerful for debugging and validation.
+This is incredibly powerful for debugging and validation.
 
 ## Analytical Exploration
 
