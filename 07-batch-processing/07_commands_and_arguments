@@ -1,0 +1,57 @@
+uv run python 07_spark_sql.py \
+    --input_green=data/pq/green/2020/ \
+    --input_yellow=data/pq/yellow/2020/ \
+    --output=data/report-2020
+
+
+URL="spark://Robs-MacBook-Air.local:7077"
+
+spark-submit \
+  --master="${URL}" \
+  07_spark_sql.py \
+      --input_green=data/pq/green/2021/ \
+      --input_yellow=data/pq/yellow/2021/ \
+      --output=data/report-2021
+
+gs://sandbox-486719-taxi-data/code/08_cloud_spark_sql.py
+
+--input_green=gs://sandbox-486719-taxi-data/pq/green/2021/
+--input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2021/
+--output=gs://sandbox-486719-taxi-data/report-2021/
+
+properties key-value pairs:
+spark.driver.memory=8g
+spark.executor.memory=4g
+
+SDK submission:
+
+gcloud dataproc jobs submit pyspark \
+    --cluster=de-zoomcamp-cluster \
+    --region=us-south1 \
+    --properties spark.driver.memory=6g,spark.executor.memory=5g,spark.driver.maxResultSize=2g \
+    gs://sandbox-486719-taxi-data/code/08_cloud_spark_sql.py \
+    -- \
+    --input_green=gs://sandbox-486719-taxi-data/pq/green/2021/ \
+    --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2021/ \
+    --output=gs://sandbox-486719-taxi-data/report-2021/
+
+create new cluster:
+
+gcloud dataproc clusters create de-zoomcamp-cluster \
+  --region=us-south1 \
+  --master-machine-type=n2-standard-4 \
+  --worker-machine-type=n2-standard-4 \
+  --num-workers=2 \
+  --master-boot-disk-size=50GB \
+  --worker-boot-disk-size=50GB \
+  --image-version=2.1
+
+
+gcloud dataproc jobs submit pyspark \
+    --cluster=de-zoomcamp-cluster \
+    --region=us-south1 \
+    gs://sandbox-486719-taxi-data/code/08_cloud_spark_sql.py \
+    -- \
+    --input_green=gs://sandbox-486719-taxi-data/pq/green/2021/ \
+    --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2021/ \
+    --output=gs://sandbox-486719-taxi-data/report-2021/
