@@ -56,6 +56,8 @@ gcloud dataproc jobs submit pyspark \
     --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2021/ \
     --output=gs://sandbox-486719-taxi-data/report-2021/
 
+2020 data:
+
 gcloud dataproc jobs submit pyspark \
     --cluster=de-zoomcamp-cluster \
     --region=us-south1 \
@@ -64,3 +66,15 @@ gcloud dataproc jobs submit pyspark \
     --input_green=gs://sandbox-486719-taxi-data/pq/green/2020/ \
     --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2020/ \
     --output=gs://sandbox-486719-taxi-data/report-2020/
+
+BG:
+
+gcloud dataproc jobs submit pyspark \
+    --cluster=de-zoomcamp-cluster \
+    --region=us-south1 \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    gs://sandbox-486719-taxi-data/code/08_cloud_spark_sql_bq.py \
+    -- \
+        --input_green=gs://sandbox-486719-taxi-data/pq/green/2020/ \
+        --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2020/ \
+        --output=trips_data_all.report_2020
