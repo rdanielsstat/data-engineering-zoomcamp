@@ -55,3 +55,12 @@ gcloud dataproc jobs submit pyspark \
     --input_green=gs://sandbox-486719-taxi-data/pq/green/2021/ \
     --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2021/ \
     --output=gs://sandbox-486719-taxi-data/report-2021/
+
+gcloud dataproc jobs submit pyspark \
+    --cluster=de-zoomcamp-cluster \
+    --region=us-south1 \
+    gs://sandbox-486719-taxi-data/code/08_cloud_spark_sql.py \
+    -- \
+    --input_green=gs://sandbox-486719-taxi-data/pq/green/2020/ \
+    --input_yellow=gs://sandbox-486719-taxi-data/pq/yellow/2020/ \
+    --output=gs://sandbox-486719-taxi-data/report-2020/
