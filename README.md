@@ -1,21 +1,3 @@
-![Data Engineering](https://img.shields.io/badge/Data%20Engineering-00BFFF)
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-CC2927?logo=postgresql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
-![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=googlecloud&logoColor=white)
-![Kestra](https://img.shields.io/badge/Kestra-Orchestration-7A5AF8)
-![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
-![ELT](https://img.shields.io/badge/ELT-workflow-orange)
-![dbt](https://img.shields.io/badge/dbt-FF0000?logo=dbt-labs&logoColor=white)
-![dlt](https://img.shields.io/badge/dlt-modern%20data%20ingestion-4B32C3)
-![Analytics Engineering](https://img.shields.io/badge/Analytics%20Engineering-FFA500)
-![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?logo=visual-studio-code&logoColor=white)
-![Bruin CLI](https://img.shields.io/badge/Bruin-CLI-orange)
-![Cursor IDE](https://img.shields.io/badge/Cursor-IDE-lightblue)
-![MCP](https://img.shields.io/badge/MCP-enabled-brightgreen)
-![Agentic AI](https://img.shields.io/badge/Agentic%20AI-supported-blue)
-
 # Data Engineering Zoomcamp
 
 Hands-on projects and notes from the Data Engineering Zoomcamp by [Alexey Grigorev](https://github.com/alexeygrigorev) and the [DataTalks.Club](https://github.com/DataTalksClub) team.
