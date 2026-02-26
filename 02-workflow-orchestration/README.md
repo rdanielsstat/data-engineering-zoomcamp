@@ -1,5 +1,4 @@
 ![Kestra](https://img.shields.io/badge/Kestra-Workflow%20Orchestration-7A5AF8)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white)
 
 # Workflow Orchestration and Data Lake Ingestion with Kestra
 
