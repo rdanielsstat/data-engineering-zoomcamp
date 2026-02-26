@@ -1,11 +1,5 @@
-![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
 ![Google Cloud Storage](https://img.shields.io/badge/Google%20Cloud%20Storage-4285F4?logo=googlecloud&logoColor=white)
-![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![dbt](https://img.shields.io/badge/dbt-FF0000?logo=dbt-labs&logoColor=white)
-![Parquet](https://img.shields.io/badge/Parquet-0052FF?logo=apacheparquet&logoColor=white)
-![Data Engineering](https://img.shields.io/badge/Data%20Engineering-00BFFF)
-![Analytics Engineering](https://img.shields.io/badge/Analytics%20Engineering-FFA500)
 
 # NYC Taxi Analytics Engineering Project
 
@@ -13,7 +7,7 @@ This project demonstrates analytics engineering using NYC taxi trip data. The go
 
 Key tools and technologies:
 
-- **GCP & BigQuery** – Cloud data warehouse for storing and querying datasets
+- **GCS & BigQuery** – Cloud data warehouse for storing and querying datasets
 - **Parquet** – Columnar file format for efficient storage and transfer
 - **DuckDB** – Local analytical database for fast testing of transformations
 - **dbt Cloud & CLI** – Building, testing, and documenting models
@@ -76,18 +70,24 @@ Data were downloaded from the course repositories:
 
 ## dbt Model Lineage and Execution
 
-In dbt, models have upstream dependencies that must be built before the dependent models. For example, the intermediate model `int_trips_unioned` depends on both the green and yellow staging models. Running:
+In dbt, models can have upstream dependencies that the selected model relies on. For example, the intermediate model `int_trips_unioned` depends on the staging models `stg_green_tripdata` and `stg_yellow_tripdata`.
+
+Running:
 
 ```bash
 dbt run --select int_trips_unioned
 ```
 
-Automatically builds all upstream dependencies first:
+Does not automatically rebuild upstream dependencies. It only runs the `int_trips_unioned` model using the latest results from its dependencies. If you want to ensure all upstream models are rebuilt, you can use the `+` operator:
+
+```bash
+dbt run --select int_trips_unioned+
+```
+
+This will rebuild:
 - `stg_green_tripdata`
 - `stg_yellow_tripdata`
 - `int_trips_unioned`
-
-This ensures that all required data is processed and available for the unioned model, maintaining a correct lineage and reproducible results.
 
 ## dbt Tests and Data Quality
 
