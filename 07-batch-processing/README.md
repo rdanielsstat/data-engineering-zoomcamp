@@ -107,6 +107,7 @@ else:
 ```
 
 Result:
+
 ```text
 Parquet files sizes (MB): ['24.41', '24.40', '24.43', '24.42']
 Average Parquet file size (MB): 24.42
