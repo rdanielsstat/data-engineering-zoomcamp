@@ -1,14 +1,6 @@
 ![Bruin](https://img.shields.io/badge/Bruin-CLI-orange)
-![Data Platform](https://img.shields.io/badge/Data%20Platform-complete-lightgrey)
-![Agentic AI](https://img.shields.io/badge/Agentic%20AI-supported-blue)
-![MCP](https://img.shields.io/badge/MCP-enabled-brightgreen)
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
-![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
-![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?logo=visual-studio-code&logoColor=white)
-![Cursor](https://img.shields.io/badge/Cursor-IDE-lightblue)
-![SQL](https://img.shields.io/badge/SQL-blue)
 
-# 🚕 End-to-End Data Pipeline with Bruin (NYC Taxi Data)
+# End-to-End Data Pipeline with Bruin (NYC Taxi Data)
 
 This project demonstrates how to build a complete analytics pipeline using Bruin and DuckDB. The pipeline ingests raw NYC taxi data, transforms it into a clean analytical model, and produces aggregated reporting tables.
 
