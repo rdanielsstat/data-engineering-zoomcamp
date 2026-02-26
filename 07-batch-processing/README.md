@@ -1,11 +1,29 @@
-## PySpark version
+![PySpark](https://img.shields.io/badge/PySpark-EE4C2C?logo=apache-spark&logoColor=white)
+![Google Cloud Dataproc](https://img.shields.io/badge/Dataproc-4285F4?logo=googlecloud&logoColor=white)
+
+# PySpark Data Engineering Project: NYC Yellow Taxi November 2025
+
+This project demonstrates practical experience with **Apache Spark and PySpark** in a data engineering workflow. Using the NYC Yellow Taxi dataset for November 2025, we explore data ingestion, partitioning, querying, and analysis both locally and in the cloud. The project also integrates Spark with Google Cloud (BigQuery and DataProc), showcasing scalable data processing.
+
+The goals of this project include:
+
+- Installing and setting up PySpark locally and on a cloud cluster
+- Loading and transforming Parquet datasets
+- Repartitioning data and understanding file sizes
+- Working with Spark DataFrames and SQL views
+- Performing analytical queries such as counting records and finding extreme values
+- Demonstrating Spark's user interface and cluster management
+
+## Environment Setup and Spark Installation
+
+To start, PySpark was installed locally and verified using:
 
 ```bash
 pyspark
 ```
 Result: `4.1.1`
 
-Or alternatively, using a Python script:
+Alternatively, using a Python script to create a Spark session:
 
 ```python
 from pyspark.sql import SparkSession
@@ -25,9 +43,15 @@ Run the script:
 python spark_test.py
 ```
 
-Result: `4.1.1`
+Output confirms the Spark version: `4.1.1`.
 
-## Partitioned data file size
+Concept:
+
+Setting up PySpark locally allows testing transformations on a single machine before scaling to a cloud cluster. Spark sessions are the entry point to using the Spark API for DataFrames, RDDs, and SQL.
+
+## Data Ingestion and Partitioning
+
+The dataset used is the Yellow Taxi November 2025 Parquet file. After loading into a Spark DataFrame, the data was repartitioned into 4 partitions and saved as Parquet files. Average size of the Parquet files was then calculated in Python. See full script below.
 
 ```python
 import os
@@ -81,7 +105,14 @@ else:
     print("No parquet files found in", output_path)
 ```
 
-## Count records
+Concepts:
+- Repartitioning optimizes parallelism for Spark transformations and can affect file size.
+- Parquet is a columnar format; saving partitions allows Spark to efficiently read subsets of data in parallel.
+- Understanding average file size helps plan for cluster resources and performance tuning.
+
+## Basic Data Exploration
+
+I created a new column with just the date part of the pickup timestamp, then filtered for trips on November 15, 2025.
 
 ```python
 from pyspark.sql.functions import col, to_date
@@ -100,7 +131,13 @@ trip_count = df_15.count()
 print("Number of trips on 2025-11-15:", trip_count)
 ```
 
-## Longest trip
+Concepts:
+- Filtering DataFrames by date demonstrates Spark’s ability to handle column transformations efficiently.
+- Counting records validates data ingestion and partitioning.
+
+## Trip Duration Analysis
+
+Trip durations were computed in hours.
 
 ```python
 from pyspark.sql.functions import to_timestamp, unix_timestamp, max as spark_max
@@ -120,11 +157,25 @@ max_trip_hours = df.select(spark_max(col("trip_hours"))).collect()[0][0]
 print("Longest trip in hours:", max_trip_hours)
 ```
 
-## User interface
+Concepts:
+- Converting timestamps to numeric durations allows quantitative analysis.
+- Using Spark’s built-in functions (`unix_timestamp`, `max`) ensures computations scale with large datasets.
 
-By default, the local user interface uses port `4040`. E.g., `localhost:4040`.
+## Spark User Interface
 
-## Least frequent pickup location zone
+Spark provides a local web UI to monitor jobs and stages. By default, it runs on:
+
+`localhost:4040`
+
+This interface allows inspection of task execution, shuffle operations, and memory usage.
+
+Concepts:
+- Monitoring Spark jobs is critical for debugging and performance tuning.
+- Even when running locally, the UI mirrors what would be visible on a cluster.
+
+## Analytical Queries: Pickup Zones
+
+To analyze pickup locations, I loaded the zone lookup CSV. I read the CSV into a Spark DataFrame and created temporary views. I then identified the least frequent pickup zone.
 
 ```python
 # Download the zones CSV
@@ -180,3 +231,33 @@ df_least = df_counts.orderBy("count", ascending = True).limit(1)
 # Show the result
 df_least.show(truncate = False)
 ```
+
+Concepts:
+- Temporary views allow SQL-style queries on DataFrames.
+- Joining trip data with lookup tables demonstrates enrichment and relational operations.
+- Aggregation and ordering reveal patterns and outliers.
+
+## Spark in the Cloud
+
+Spark was also tested on a **Google Cloud Dataproc cluster**, using both a local session for development and a remote cluster for scaled execution. Spark submit was used to pass command-line arguments specifying dataset paths and years. Cloud deployment allows large datasets to be processed efficiently and integrates with BigQuery for downstream analytics.
+
+Concepts:
+- Cloud Spark clusters enable distributed computing across multiple nodes.
+- Command-line arguments increase flexibility and reproducibility of scripts.
+- Integration with BigQuery showcases end-to-end cloud data engineering pipelines.
+
+## Summary
+
+This project demonstrates:
+- Setting up PySpark locally and in the cloud
+- Data ingestion, repartitioning, and Parquet storage
+- Basic exploratory analysis and aggregation
+- Working with SQL views and joins
+- Trip duration computations and analytics
+- Monitoring Spark jobs via the UI
+
+Through this workflow, key data engineering concepts are reinforced, including:
+- Parallel processing and partitioning
+- Scalable data transformations
+- Reproducibility and workflow automation
+- Integration of Spark with cloud services
