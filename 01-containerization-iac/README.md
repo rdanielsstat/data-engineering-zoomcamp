@@ -3,7 +3,6 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=googlecloud&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-CC2927?logo=postgresql&logoColor=white)
 
 # Containerization and Infrastructure Foundations for Data Engineering
 
@@ -86,6 +85,7 @@ db:5432
 ```
 
 This highlights an important concept:
+
 Host machine ports and container network ports are different concerns. Containers communicate over the internal Docker network, not the host-mapped ports.
 
 ## Preparing the Dataset
@@ -111,8 +111,8 @@ Understanding trip length distribution is a common exploratory task.
 SELECT COUNT(*) AS short_trips
   FROM green_tripdata
  WHERE lpep_pickup_datetime >= '2025-11-01' AND 
- 	   lpep_pickup_datetime < '2025-12-01' AND 
-	   trip_distance <= 1 ;
+ 	     lpep_pickup_datetime < '2025-12-01' AND 
+	     trip_distance <= 1 ;
 ```
 
 Result: **8,007 trips**
@@ -124,7 +124,8 @@ This query demonstrates filtering by time ranges and applying distance-based con
 To identify outliers while avoiding data errors, trips longer than 100 miles were excluded.
 
 ```sql
-SELECT DATE(lpep_pickup_datetime) AS pickup_day, MAX(trip_distance) AS max_distance
+SELECT DATE(lpep_pickup_datetime) AS pickup_day, 
+       MAX(trip_distance) AS max_distance
   FROM green_tripdata
  WHERE trip_distance < 100
  GROUP BY DATE(lpep_pickup_datetime)
@@ -145,7 +146,7 @@ SELECT tz."Zone" AS pickup_zone,
        SUM(gtd."total_amount") AS total_amount_sum
   FROM green_tripdata AS gtd
   JOIN taxi_zone_lookup AS tz
-       ON gtd."PULocationID" = tz."LocationID"
+    ON gtd."PULocationID" = tz."LocationID"
  WHERE DATE(gtd.lpep_pickup_datetime) = '2025-11-18'
  GROUP BY tz."Zone"
  ORDER BY total_amount_sum DESC
@@ -161,15 +162,16 @@ This demonstrates star-schema style joins and revenue aggregation.
 This query analyzes tipping behavior by combining pickup filtering, time filtering, and zone joins.
 
 ```sql
-SELECT tz_drop."Zone" AS dropoff_zone, gtd.tip_amount
+SELECT tz_drop."Zone" AS dropoff_zone, 
+       gtd.tip_amount
   FROM green_tripdata AS gtd
   JOIN taxi_zone_lookup AS tz_pick
-       ON gtd."PULocationID" = tz_pick."LocationID"
+    ON gtd."PULocationID" = tz_pick."LocationID"
   JOIN taxi_zone_lookup AS tz_drop
-       ON gtd."DOLocationID" = tz_drop."LocationID"
+    ON gtd."DOLocationID" = tz_drop."LocationID"
  WHERE tz_pick."Zone" = 'East Harlem North' AND 
        gtd.lpep_pickup_datetime >= '2025-11-01' AND 
-	   gtd.lpep_pickup_datetime < '2025-12-01'
+	     gtd.lpep_pickup_datetime < '2025-12-01'
  ORDER BY gtd.tip_amount DESC
  LIMIT 1 ;
 ```
