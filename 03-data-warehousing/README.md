@@ -1,9 +1,6 @@
 ![BigQuery](https://img.shields.io/badge/BigQuery-4285F4?logo=googlebigquery&logoColor=white)
-![Google Cloud Storage](https://img.shields.io/badge/Google%20Cloud%20Storage-4285F4?logo=googlecloud&logoColor=white)
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![DLT](https://img.shields.io/badge/DLT-Data%20Loading-8A2BE2)
-![Data Warehouse](https://img.shields.io/badge/Data%20Warehouse-Analytics-orange)
 
 # NYC Taxi Data Warehousing (BigQuery)
 
@@ -118,7 +115,8 @@ SELECT PULocationID
   FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 
 -- Higher processing cost (multi-column scan)
-SELECT PULocationID, DOLocationID 
+SELECT PULocationID, 
+       DOLocationID 
   FROM `sandbox-486719.rides_dataset.yellow_taxi_2024_native` ;
 ```
 
