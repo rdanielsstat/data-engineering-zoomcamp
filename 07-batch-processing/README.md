@@ -21,6 +21,7 @@ To start, PySpark was installed locally and verified using:
 ```bash
 pyspark
 ```
+
 Result: `4.1.1`
 
 Alternatively, using a Python script to create a Spark session:
@@ -105,6 +106,12 @@ else:
     print("No parquet files found in", output_path)
 ```
 
+Result:
+```text
+Parquet files sizes (MB): ['24.41', '24.40', '24.43', '24.42']
+Average Parquet file size (MB): 24.42
+```
+
 Concepts:
 - Repartitioning optimizes parallelism for Spark transformations and can affect file size.
 - Parquet is a columnar format; saving partitions allows Spark to efficiently read subsets of data in parallel.
@@ -131,6 +138,8 @@ trip_count = df_15.count()
 print("Number of trips on 2025-11-15:", trip_count)
 ```
 
+Result: 162,604
+
 Concepts:
 - Filtering DataFrames by date demonstrates Spark’s ability to handle column transformations efficiently.
 - Counting records validates data ingestion and partitioning.
@@ -156,6 +165,8 @@ df = df.withColumn("trip_hours", (unix_timestamp(col("dropoff_ts")) - unix_times
 max_trip_hours = df.select(spark_max(col("trip_hours"))).collect()[0][0]
 print("Longest trip in hours:", max_trip_hours)
 ```
+
+Result: 90.6
 
 Concepts:
 - Converting timestamps to numeric durations allows quantitative analysis.
@@ -231,6 +242,8 @@ df_least = df_counts.orderBy("count", ascending = True).limit(1)
 # Show the result
 df_least.show(truncate = False)
 ```
+
+Result: Arden Heights
 
 Concepts:
 - Temporary views allow SQL-style queries on DataFrames.
