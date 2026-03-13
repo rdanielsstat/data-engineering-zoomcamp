@@ -54,7 +54,7 @@ A Bruin pipeline relies on a few core components:
 | `pipeline.yml` | Pipeline configuration and variables                 |
 | `assets/`      | All ingestion, SQL, and Python assets                |
 
-This separation keeps secrets local while allowing the pipeline definition to remain version controlled.
+This separation keeps secrets local while allowing the pipeline definition to remain version controlled. Although technically not strictly required, the `.bruin.yml` is recommended.
 
 ## Pipeline Configuration
 
