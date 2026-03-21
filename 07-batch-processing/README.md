@@ -3,7 +3,7 @@
 
 # PySpark Data Engineering Project: NYC Yellow Taxi November 2025
 
-This project demonstrates practical experience with **Apache Spark and PySpark** in a data engineering workflow. Using the NYC Yellow Taxi dataset for November 2025, we explore data ingestion, partitioning, querying, and analysis both locally and in the cloud. The project also integrates Spark with Google Cloud (BigQuery and DataProc), showcasing scalable data processing.
+This project demonstrates practical experience with **Apache Spark and PySpark** in a data engineering workflow. Using the NYC Yellow Taxi dataset for November 2025, I explore data ingestion, partitioning, querying, and analysis both locally and in the cloud. The project also integrates Spark with Google Cloud (BigQuery and DataProc), showcasing scalable data processing.
 
 The goals of this project include:
 
