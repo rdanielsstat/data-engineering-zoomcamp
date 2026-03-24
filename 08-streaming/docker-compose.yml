@@ -44,7 +44,7 @@ services:
   jobmanager:
     build:
       context: .
-      dockerfile: ./Dockerfile.flink
+      dockerfile: ./Dockerfile_ARM64.flink
     image: pyflink-workshop
     pull_policy: never
     expose:
