@@ -43,11 +43,8 @@ The repository is organized by modules and workshops:
 ├── 05-data-platforms
 ├── 06-agentic-dlt
 ├── 07-batch-processing
-├── 08-streaming
-└── final-project
+└── 08-streaming
 ```
-
-Structure may evolve as the course progresses.
 
 ## Goals
 
