@@ -2,7 +2,7 @@
 
 Hands-on projects and notes from the Data Engineering Zoomcamp by [Alexey Grigorev](https://github.com/alexeygrigorev) and the [DataTalks.Club](https://github.com/DataTalksClub) team.
 
-This repository follows the full course curriculum and contains exercises, experiments, and the final project, covering modern data engineering tools and best practices.
+This repository follows the full course curriculum and contains exercises, experiments, and the final project.
 
 ## Course Overview
 
@@ -36,28 +36,19 @@ The repository is organized by modules and workshops:
 
 ```text
 .
-├── 01-containerization-iac    # IAC = infrastructure as code
-├── 02-workflow-orchestration
-├── 03-data-warehousing
-├── 04-analytics-engineering
-├── 05-data-platforms
-├── 06-agentic-dlt
-├── 07-batch-processing
-└── 08-streaming
+├── 01-containerization-iac    # Dockerized Postgres ingestion pipeline, GCP setup with Terraform
+├── 02-workflow-orchestration  # Kestra pipelines moving NYC taxi data into GCS and Postgres
+├── 03-data-warehousing        # BigQuery external tables, partitioning, clustering
+├── 04-analytics-engineering   # dbt models in DuckDB and BigQuery
+├── 05-data-platforms          # Bruin end-to-end pipeline, 3-layer medallion architecture
+├── 06-agentic-dlt             # dlt pipeline built with MCP and Cursor
+├── 07-batch-processing        # PySpark locally and on Dataproc, output to BigQuery
+└── 08-streaming               # PyFlink + Redpanda streaming pipeline on green taxi data
 ```
-
-## Goals
-
-- Build production-style data pipelines from scratch  
-- Learn cloud-native data engineering workflows  
-- Practice infrastructure automation and orchestration  
-- Gain experience with both batch and streaming systems  
 
 ## Acknowledgements
 
 All course content and structure are provided by:
 
 - Alexey Grigorev  
-- The DataTalks.Club team  
-
-This repository is for personal learning and practice.
+- The DataTalks.Club team
