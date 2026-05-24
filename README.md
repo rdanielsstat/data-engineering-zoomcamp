@@ -61,7 +61,3 @@ All course content and structure are provided by:
 - The DataTalks.Club team  
 
 This repository is for personal learning and practice.
-
-## License
-
-This project is for educational purposes.
